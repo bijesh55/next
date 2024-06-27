@@ -1,14 +1,15 @@
 import Image from "next/image";
-
 import ReactForm from "@/component/Reactform";
+import ReactTorm from "@/component/ReactTorm"
 
 
 export default function Home() {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 `}
+      className={``}
     >
 <ReactForm/>
+{/* <ReactTorm/> */}
     </main>
   );
 }
