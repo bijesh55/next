@@ -6,7 +6,7 @@ import ReactTorm from "@/component/ReactTorm"
 export default function Home() {
   return (
     <main
-      className={``}
+      
     >
 <ReactForm/>
 {/* <ReactTorm/> */}
