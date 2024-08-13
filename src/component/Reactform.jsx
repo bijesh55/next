@@ -10,14 +10,14 @@ export default function ReactForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
-      address: "",
-      email: "",
+      name: "Bijesh",
+      address: "Sindupalchow",
+      email: "bijesh@ktmbees.com",
     },
   });
   const [persons, setPersons] = useState([]);
 
-  const [filteredItems, setFilteredItems] = useState();
+  const [filteredItems, setFilteredItems] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const onSubmit = (data) => {
     setPersons([...persons, data]);
@@ -28,15 +28,13 @@ export default function ReactForm() {
   };
   const filterItems = (query) => {
     if (query) {
-      const lowerCaseQuery = query?.toLowerCase();
-     
-
+      const lowerCaseQuery = query?.toLowerCase();    
       setFilteredItems(
         persons?.filter((item) =>
-          item?.name?.toLowerCase().includes(lowerCaseQuery)
-        )
+          item?.name?.toLowerCase().includes(lowerCaseQuery)       
+      )
       );
-      console.log(filterItems)
+      // console.log(filterItems)
     } else {
       setFilteredItems(persons);
     }
@@ -51,7 +49,7 @@ export default function ReactForm() {
 console.log("bijesh")
     const updatedItems = [...filteredItems];
     updatedItems.splice(index, 1);
-    setPersons(filteredItems);
+    setFilteredItems(updatedItems);
 
   };
   return (
@@ -74,6 +72,11 @@ console.log("bijesh")
           <div  className="mt-8">
             <label className=" lg:text-2xl text-lg md:text-xl"> Name :  </label>
             <Controller
+            rules={
+              {required:true,
+                maxLength:15,
+              minLength:4,}
+            }
               render={({ field }) => <input {...field} className=" border border-black lg:h-12 lg:w-96 lg:rounded-lg text-center text-black ml-4 h-8 rounded md:w-72 md:h-10 md:rounded-md md:text-xl"
               placeholder="Enter Firstname" />}
               name="name"
@@ -82,39 +85,52 @@ console.log("bijesh")
            
              
             />
+            {errors.name && <h1 className="text-red-600 text-2xl">Address is required.</h1>}
           </div>
           <div className="mt-8">
             <label className="lg:text-2xl text-lg md:text-xl"> Address : </label>
             <Controller
+            rules={{
+              required: true,
+              maxLength:10,
+              minLength:4,
+            }}
               render={({ field }) => <input {...field}  className=" border border-black lg:h-12 lg:w-96 lg:rounded-lg text-center text-black rounded h-8  md:w-72 md:h-10 md:rounded-md md:text-xl" 
               placeholder="Enter Address" />}
               name="address"
               control={control}
               defaultValue="hello world"
             />
+            {errors.address && <h1 className="text-red-600 text-2xl">Address is required.</h1>}
           </div>
           <div className="mt-8">
             <label className=" lg:text-2xl text-lg md:text-xl">Email :</label>
             <Controller
+            rules={{
+              required:true,
+              minLength:4,
+              maxLength:30,
+            }}
               render={({ field }) => <input {...field} type="email" className=" border border-black lg:h-12 lg:w-96 lg:rounded-lg text-center text-black ml-4 rounded h-8  md:w-72 md:h-10 md:rounded-md md:text-xl"
               placeholder="Enter Email" />}
               name="email"
               control={control}
               defaultValue="hello world"
             />
+            {/* {errors.email && <h1 className="text-red-400 text-2xl">Email is required</h1>} */}
           </div>
            
           <input type="submit" className="lg:w-96 border bg-blue-200 lg:h-12 mt-8 lg:text-3xl text-xl lg:rounded-lg w-48 h-8 rounded md:rounded-md md:w-72 md:h-10 hover:bg-purple-400"></input>
           <br />
      
-          <button type="submit" className="lg:w-96 border bg-blue-200 lg:h-12  mt-8 lg:text-3xl lg:rounded-md h-8 w-48 text-xl md:rounded-md md:w-72 md:h-10">{editIndex !== null ? "Update" : "Add"}</button>
+          <button type="submit" className="lg:w-96 border bg-blue-200 lg:h-12  mt-8 lg:text-3xl lg:rounded-md h-8 w-48 text-xl md:rounded-md md:w-72 md:h-10 hover:bg-purple-400">{editIndex !== null ? "Update" : "Add"}</button>
           </div>
         </form>
         </div>
         
           <div className=" flex flex-wrap items-start rounded gap-8 m-auto">
             {filteredItems?.map((person, index) => (
-              <div key={index} className="bg-slate-400  lg:w-40 lg:h-36 pt-4 rounded text-center  flex-row shadow-2xl  text-xs">
+              <div key={index} className="bg-slate-400  lg:h-36 pt-4 rounded text-center  flex-row shadow-2xl  text-xs lg:text-lg">
                 <ul>
                   <li>
                     <h2>{person.name}</h2>
